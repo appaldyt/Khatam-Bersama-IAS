@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import type { Claim, Group } from '../lib/supabase';
 
 interface ParticipantsListProps {
@@ -7,7 +7,6 @@ interface ParticipantsListProps {
   activeCampaignId?: string;
 }
 
-const ADMIN_AUTH_STORAGE_KEY = 'participants_csv_admin_auth';
 const FALLBACK_ADMIN_USER = 'admin';
 const FALLBACK_ADMIN_PASS = 'masadi123';
 
@@ -43,11 +42,6 @@ export default function ParticipantsList({
     (import.meta.env.VITE_ADMIN_DOWNLOAD_USER || FALLBACK_ADMIN_USER).trim();
   const adminPassword =
     (import.meta.env.VITE_ADMIN_DOWNLOAD_PASS || FALLBACK_ADMIN_PASS).trim();
-
-  useEffect(() => {
-    const storedState = window.sessionStorage.getItem(ADMIN_AUTH_STORAGE_KEY);
-    setIsAdminLoggedIn(storedState === 'true');
-  }, []);
 
   const toCsvCell = (value: string) => {
     const escaped = value.replace(/"/g, '""');
@@ -103,13 +97,11 @@ export default function ParticipantsList({
       return;
     }
 
-    window.sessionStorage.setItem(ADMIN_AUTH_STORAGE_KEY, 'true');
     setIsAdminLoggedIn(true);
     window.alert('Login admin berhasil.');
   };
 
   const handleAdminLogout = () => {
-    window.sessionStorage.removeItem(ADMIN_AUTH_STORAGE_KEY);
     setIsAdminLoggedIn(false);
   };
 
