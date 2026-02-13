@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import type { Claim, Group } from '../lib/supabase';
+import { getAdminAuthConfig } from '../config/adminAuth';
 
 interface ParticipantsListProps {
   claims: Claim[];
@@ -7,13 +8,16 @@ interface ParticipantsListProps {
   activeCampaignId?: string;
 }
 
-const FALLBACK_ADMIN_USER = 'admin';
-const FALLBACK_ADMIN_PASS = 'masadi123';
-
 function maskNik(nik?: string) {
   if (!nik) return '-';
   if (nik.length <= 4) return nik;
   return `${nik.slice(0, 2)}****${nik.slice(-2)}`;
+}
+
+function maskWhatsappNumber(whatsapp?: string | null) {
+  if (!whatsapp) return '-';
+  if (whatsapp.length <= 4) return whatsapp;
+  return `${whatsapp.slice(0, 4)}****${whatsapp.slice(-2)}`;
 }
 
 function formatTime(timestamp: string) {
@@ -38,10 +42,7 @@ export default function ParticipantsList({
 
   const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(false);
 
-  const adminUser =
-    (import.meta.env.VITE_ADMIN_DOWNLOAD_USER || FALLBACK_ADMIN_USER).trim();
-  const adminPassword =
-    (import.meta.env.VITE_ADMIN_DOWNLOAD_PASS || FALLBACK_ADMIN_PASS).trim();
+  const { username: adminUser, password: adminPassword } = getAdminAuthConfig();
 
   const toCsvCell = (value: string) => {
     const escaped = value.replace(/"/g, '""');
@@ -51,7 +52,9 @@ export default function ParticipantsList({
   const buildCsv = () => {
     const header = [
       'Nama',
+      'Entitas',
       'Jabatan',
+      'Nomor WhatsApp',
       'NIK',
       'Kelompok',
       'Juz',
@@ -67,7 +70,9 @@ export default function ParticipantsList({
 
       return [
         claim.participants?.name || '-',
+        claim.participants?.entity_name || '-',
         claim.participants?.job_title || '-',
+        claim.participants?.whatsapp_number || '-',
         claim.participants?.nik || '-',
         groupName,
         `Juz ${claim.juz_number}`,
@@ -82,12 +87,14 @@ export default function ParticipantsList({
   };
 
   const handleAdminLogin = () => {
-    const username = window.prompt('Username admin:');
+    const usernameInput = window.prompt('Username admin:');
+    const username = usernameInput?.trim() || '';
     if (!username) {
       return;
     }
 
-    const password = window.prompt('Password admin:');
+    const passwordInput = window.prompt('Password admin:');
+    const password = passwordInput?.trim() || '';
     if (!password) {
       return;
     }
@@ -175,7 +182,9 @@ export default function ParticipantsList({
               <thead className="bg-gray-100 text-gray-700 sticky top-0 z-10">
                 <tr>
                   <th className="px-4 py-3 text-left font-semibold">Nama</th>
+                  <th className="px-4 py-3 text-left font-semibold">Entitas</th>
                   <th className="px-4 py-3 text-left font-semibold">Jabatan</th>
+                  <th className="px-4 py-3 text-left font-semibold">No. WhatsApp</th>
                   <th className="px-4 py-3 text-left font-semibold">NIK</th>
                   <th className="px-4 py-3 text-left font-semibold">Kelompok</th>
                   <th className="px-4 py-3 text-left font-semibold">Juz</th>
@@ -186,7 +195,7 @@ export default function ParticipantsList({
               <tbody>
                 {displayedClaims.length === 0 ? (
                   <tr>
-                    <td colSpan={7} className="px-4 py-10 text-center text-gray-500">
+                    <td colSpan={9} className="px-4 py-10 text-center text-gray-500">
                       Belum ada peserta yang klaim part.
                     </td>
                   </tr>
@@ -200,7 +209,13 @@ export default function ParticipantsList({
                           {claim.participants?.name || '-'}
                         </td>
                         <td className="px-4 py-3 text-gray-700">
+                          {claim.participants?.entity_name || '-'}
+                        </td>
+                        <td className="px-4 py-3 text-gray-700">
                           {claim.participants?.job_title || '-'}
+                        </td>
+                        <td className="px-4 py-3 text-gray-700">
+                          {maskWhatsappNumber(claim.participants?.whatsapp_number)}
                         </td>
                         <td className="px-4 py-3 text-gray-700">
                           {maskNik(claim.participants?.nik)}

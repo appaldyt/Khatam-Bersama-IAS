@@ -10,6 +10,30 @@ import ParticipantsList from './components/ParticipantsList';
 import RulesAndFAQ from './components/RulesAndFAQ';
 import Footer from './components/Footer';
 
+function sortGroups(groups: Group[]) {
+  const preferredOrder = [
+    'Kantor Pusat',
+    'Regional 1',
+    'Regional 2',
+    'Regional 3',
+    'Regional 4',
+    'Entitas',
+  ];
+
+  const orderMap = new Map(preferredOrder.map((name, index) => [name, index]));
+
+  return [...groups].sort((a, b) => {
+    const aOrder = orderMap.get(a.name) ?? Number.MAX_SAFE_INTEGER;
+    const bOrder = orderMap.get(b.name) ?? Number.MAX_SAFE_INTEGER;
+
+    if (aOrder !== bOrder) {
+      return aOrder - bOrder;
+    }
+
+    return a.name.localeCompare(b.name);
+  });
+}
+
 function App() {
   const [campaigns, setCampaigns] = useState<Campaign[]>([]);
   const [groups, setGroups] = useState<Group[]>([]);
@@ -68,7 +92,7 @@ function App() {
       ]);
 
       if (campaignsRes.data) setCampaigns(campaignsRes.data);
-      if (groupsRes.data) setGroups(groupsRes.data);
+      if (groupsRes.data) setGroups(sortGroups(groupsRes.data));
       if (claimsRes.data) setClaims(claimsRes.data);
       if (partsRes.data) setParts(partsRes.data);
     } catch (error) {
@@ -86,9 +110,11 @@ function App() {
   };
 
   const handleClaimSubmit = async (
+    entityName: string,
     nik: string,
     name: string,
     jobTitle: string,
+    whatsappNumber: string,
     groupId: string,
     juzNumber: number,
     partId: string
@@ -132,7 +158,13 @@ function App() {
     if (!participant.data) {
       const { data: newParticipant, error: insertError } = await supabase
         .from('participants')
-        .insert({ nik, name, job_title: jobTitle })
+        .insert({
+          entity_name: entityName,
+          nik,
+          name,
+          job_title: jobTitle,
+          whatsapp_number: whatsappNumber,
+        })
         .select()
         .single();
 

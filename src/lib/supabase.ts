@@ -22,9 +22,11 @@ export type Group = {
 
 export type Participant = {
   id: string;
+  entity_name: string | null;
   nik: string;
   name: string;
   job_title: string | null;
+  whatsapp_number: string | null;
   created_at: string;
 };
 

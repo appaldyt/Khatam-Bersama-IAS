@@ -6,9 +6,11 @@ interface JoinFormProps {
   groups: Group[];
   parts: JuzPart[];
   onSubmit: (
+    entityName: string,
     nik: string,
     name: string,
     jobTitle: string,
+    whatsappNumber: string,
     groupId: string,
     juzNumber: number,
     partId: string,
@@ -26,15 +28,29 @@ export default function JoinForm({
   preselectedGroup,
   preselectedPartId,
 }: JoinFormProps) {
+  const entityOptions = [
+    'PT Integrasi Aviasi Solusi',
+    'PT Gapura Angkasa',
+    'PT IAS Hospitality',
+    'PT IAS Support',
+    'PT IAS Property',
+    'PT Angkasa Pura Suport',
+  ];
+  const iasEntityName = 'PT Integrasi Aviasi Solusi';
+
+  const [entityName, setEntityName] = useState(entityOptions[0]);
   const [nik, setNik] = useState('');
   const [name, setName] = useState('');
   const [jobTitle, setJobTitle] = useState('');
+  const [whatsappNumber, setWhatsappNumber] = useState('');
   const [groupId, setGroupId] = useState(preselectedGroup || groups[0]?.id || '');
   const [juzNumber, setJuzNumber] = useState(preselectedJuz || 1);
   const [partId, setPartId] = useState(preselectedPartId || '');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
+  const isIasEntity = entityName === iasEntityName;
+  const entitasGroupId = groups.find((group) => group.name === 'Entitas')?.id;
 
   const partsByJuz = useMemo(() => {
     return parts
@@ -67,6 +83,18 @@ export default function JoinForm({
   }, [preselectedPartId]);
 
   useEffect(() => {
+    if (isIasEntity) {
+      setNik((prevNik) => prevNik.replace(/\D/g, '').slice(0, 9));
+    }
+  }, [isIasEntity]);
+
+  useEffect(() => {
+    if (!isIasEntity && entitasGroupId) {
+      setGroupId(entitasGroupId);
+    }
+  }, [isIasEntity, entitasGroupId]);
+
+  useEffect(() => {
     if (partsByJuz.length === 0) {
       setPartId('');
       return;
@@ -83,24 +111,47 @@ export default function JoinForm({
     setError('');
     setSuccess(false);
 
-    if (!nik || !name || !jobTitle || !groupId || !partId) {
+    if (!entityName || !nik || !name || !jobTitle || !whatsappNumber || !groupId || !partId) {
       setError('Harap isi semua field');
       return;
     }
 
-    if (nik.length !== 9) {
-      setError('NIK harus 9 digit');
+    if (isIasEntity) {
+      if (!/^\d+$/.test(nik)) {
+        setError('NIK untuk PT Integrasi Aviasi Solusi harus berupa angka');
+        return;
+      }
+
+      if (nik.length > 9) {
+        setError('NIK untuk PT Integrasi Aviasi Solusi maksimal 9 digit');
+        return;
+      }
+    }
+
+    if (whatsappNumber.length < 10) {
+      setError('Nomor WhatsApp minimal 10 digit');
       return;
     }
 
     setLoading(true);
 
     try {
-      await onSubmit(nik, name, jobTitle, groupId, juzNumber, partId);
+      await onSubmit(
+        entityName,
+        nik,
+        name,
+        jobTitle,
+        whatsappNumber,
+        groupId,
+        juzNumber,
+        partId
+      );
       setSuccess(true);
+      setEntityName(entityOptions[0]);
       setNik('');
       setName('');
       setJobTitle('');
+      setWhatsappNumber('');
       setJuzNumber(1);
       const firstPartInFirstJuz = parts
         .filter((part) => part.juz_number === 1)
@@ -134,17 +185,42 @@ export default function JoinForm({
         <form onSubmit={handleSubmit} className="bg-gray-50 rounded-xl p-8 shadow-lg">
           <div className="space-y-6">
             <div>
+              <label htmlFor="entity" className="block text-sm font-semibold text-gray-700 mb-2">
+                Entitas
+              </label>
+              <select
+                id="entity"
+                value={entityName}
+                onChange={(e) => setEntityName(e.target.value)}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+              >
+                {entityOptions.map((entity) => (
+                  <option key={entity} value={entity}>
+                    {entity}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div>
               <label htmlFor="nik" className="block text-sm font-semibold text-gray-700 mb-2">
-                NIK Karyawan (9 digit)
+                NIK Karyawan
               </label>
               <input
                 type="text"
                 id="nik"
                 value={nik}
-                onChange={(e) => setNik(e.target.value.replace(/\D/g, '').slice(0, 9))}
-                placeholder="Contoh: 123456789"
+                onChange={(e) => {
+                  const nextValue = e.target.value;
+                  if (isIasEntity) {
+                    setNik(nextValue.replace(/\D/g, '').slice(0, 9));
+                    return;
+                  }
+                  setNik(nextValue.slice(0, 50));
+                }}
+                placeholder={isIasEntity ? 'Contoh: 123456789' : 'Contoh: IAS-EMP-00123'}
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
-                maxLength={9}
+                maxLength={isIasEntity ? 9 : 50}
               />
             </div>
 
@@ -177,6 +253,23 @@ export default function JoinForm({
             </div>
 
             <div>
+              <label htmlFor="whatsappNumber" className="block text-sm font-semibold text-gray-700 mb-2">
+                Nomor WhatsApp
+              </label>
+              <input
+                type="text"
+                id="whatsappNumber"
+                value={whatsappNumber}
+                onChange={(e) =>
+                  setWhatsappNumber(e.target.value.replace(/\D/g, '').slice(0, 15))
+                }
+                placeholder="Contoh: 081234567890"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                maxLength={15}
+              />
+            </div>
+
+            <div>
               <label htmlFor="group" className="block text-sm font-semibold text-gray-700 mb-2">
                 Kelompok
               </label>
@@ -185,6 +278,7 @@ export default function JoinForm({
                 value={groupId}
                 onChange={(e) => setGroupId(e.target.value)}
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                disabled={!isIasEntity}
               >
                 {groups.map((group) => (
                   <option key={group.id} value={group.id}>
@@ -192,6 +286,11 @@ export default function JoinForm({
                   </option>
                 ))}
               </select>
+              {!isIasEntity && (
+                <p className="text-xs text-gray-500 mt-2">
+                  Untuk entitas selain PT Integrasi Aviasi Solusi, kelompok otomatis ke Entitas.
+                </p>
+              )}
             </div>
 
             <div>
