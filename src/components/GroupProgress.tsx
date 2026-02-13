@@ -219,7 +219,9 @@ export default function GroupProgress({
                           >
                             <div className="min-w-0">
                               <p className="text-xs font-medium text-gray-700 truncate">
-                                Part {part.part_number} - {part.part_label}
+                                <span title={`Part ${part.part_number} - ${part.part_label}`}>
+                                  Part {part.part_number} - {part.part_label}
+                                </span>
                               </p>
                               {partClaim ? (
                                 <p className="text-xs text-emerald-700 truncate">
