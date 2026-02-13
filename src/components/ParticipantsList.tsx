@@ -8,6 +8,8 @@ interface ParticipantsListProps {
 }
 
 const ADMIN_AUTH_STORAGE_KEY = 'participants_csv_admin_auth';
+const FALLBACK_ADMIN_USER = 'admin';
+const FALLBACK_ADMIN_PASS = 'admin123';
 
 function maskNik(nik?: string) {
   if (!nik) return '-';
@@ -37,8 +39,10 @@ export default function ParticipantsList({
 
   const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(false);
 
-  const adminUser = import.meta.env.VITE_ADMIN_DOWNLOAD_USER || 'admin';
-  const adminPassword = import.meta.env.VITE_ADMIN_DOWNLOAD_PASS;
+  const adminUser =
+    (import.meta.env.VITE_ADMIN_DOWNLOAD_USER || FALLBACK_ADMIN_USER).trim();
+  const adminPassword =
+    (import.meta.env.VITE_ADMIN_DOWNLOAD_PASS || FALLBACK_ADMIN_PASS).trim();
 
   useEffect(() => {
     const storedState = window.sessionStorage.getItem(ADMIN_AUTH_STORAGE_KEY);
@@ -84,13 +88,6 @@ export default function ParticipantsList({
   };
 
   const handleAdminLogin = () => {
-    if (!adminPassword) {
-      window.alert(
-        'Admin password belum diset. Tambahkan VITE_ADMIN_DOWNLOAD_PASS pada environment.'
-      );
-      return;
-    }
-
     const username = window.prompt('Username admin:');
     if (!username) {
       return;
