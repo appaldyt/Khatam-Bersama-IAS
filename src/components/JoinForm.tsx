@@ -88,8 +88,8 @@ export default function JoinForm({
       return;
     }
 
-    if (nik.length !== 8) {
-      setError('NIK harus 8 digit');
+    if (nik.length !== 9) {
+      setError('NIK harus 9 digit');
       return;
     }
 
@@ -135,16 +135,16 @@ export default function JoinForm({
           <div className="space-y-6">
             <div>
               <label htmlFor="nik" className="block text-sm font-semibold text-gray-700 mb-2">
-                NIK (8 digit)
+                NIK Karyawan (9 digit)
               </label>
               <input
                 type="text"
                 id="nik"
                 value={nik}
-                onChange={(e) => setNik(e.target.value.replace(/\D/g, '').slice(0, 8))}
-                placeholder="Contoh: 12345678"
+                onChange={(e) => setNik(e.target.value.replace(/\D/g, '').slice(0, 9))}
+                placeholder="Contoh: 123456789"
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
-                maxLength={8}
+                maxLength={9}
               />
             </div>
 
