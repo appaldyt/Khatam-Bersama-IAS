@@ -2,21 +2,21 @@ import { Shield, HelpCircle, MessageCircle } from 'lucide-react';
 
 export default function RulesAndFAQ() {
   const rules = [
-    'Setiap peserta hanya boleh mengklaim 1 juz per kelompok per kampanye',
+    'Setiap peserta hanya boleh mengklaim 1 part pada setiap juz di kelompok yang sama',
     'Juz yang sudah diklaim tidak dapat diubah atau dibatalkan',
     'Pastikan Anda dapat menyelesaikan membaca juz yang diklaim',
-    'NIK yang sama tidak dapat mengklaim lebih dari 1 juz dalam kelompok yang sama',
+    'Part yang sudah diklaim peserta lain tidak dapat diambil ulang',
     'Jika ada kesalahan, hubungi admin untuk bantuan',
   ];
 
   const faqs = [
     {
       question: 'Apakah saya bisa mengklaim lebih dari 1 juz?',
-      answer: 'Tidak. Setiap peserta hanya boleh mengklaim 1 juz per kelompok per kampanye untuk memastikan distribusi yang adil.',
+      answer: 'Anda bisa mengikuti lebih dari satu juz, tetapi hanya boleh mengambil 1 part pada juz yang sama dalam kelompok yang sama.',
     },
     {
       question: 'Bagaimana jika juz yang saya inginkan sudah diklaim?',
-      answer: 'Anda dapat memilih juz lain yang masih tersedia atau bergabung dengan kelompok lain yang juz tersebut masih tersedia.',
+      answer: 'Anda tetap bisa memilih part lain yang masih tersedia pada juz tersebut, atau pindah ke juz/kelompok lain.',
     },
     {
       question: 'Apakah saya bisa bergabung di lebih dari satu kelompok?',

@@ -39,7 +39,7 @@ export default function ParticipantsList({
           Daftar Peserta
         </h2>
         <p className="text-center text-gray-600 mb-8">
-          Peserta yang sudah mengikuti dan mengklaim juz
+          Peserta yang sudah mengikuti dan mengklaim part bacaan
         </p>
 
         <div className="bg-gray-50 rounded-xl border border-gray-200 overflow-hidden">
@@ -52,14 +52,15 @@ export default function ParticipantsList({
                   <th className="px-4 py-3 text-left font-semibold">NIK</th>
                   <th className="px-4 py-3 text-left font-semibold">Kelompok</th>
                   <th className="px-4 py-3 text-left font-semibold">Juz</th>
+                  <th className="px-4 py-3 text-left font-semibold">Part</th>
                   <th className="px-4 py-3 text-left font-semibold">Waktu Klaim</th>
                 </tr>
               </thead>
               <tbody>
                 {displayedClaims.length === 0 ? (
                   <tr>
-                    <td colSpan={6} className="px-4 py-10 text-center text-gray-500">
-                      Belum ada peserta yang klaim juz.
+                    <td colSpan={7} className="px-4 py-10 text-center text-gray-500">
+                      Belum ada peserta yang klaim part.
                     </td>
                   </tr>
                 ) : (
@@ -79,6 +80,11 @@ export default function ParticipantsList({
                         </td>
                         <td className="px-4 py-3 text-gray-700">{groupName}</td>
                         <td className="px-4 py-3 text-gray-700">Juz {claim.juz_number}</td>
+                        <td className="px-4 py-3 text-gray-700">
+                          {claim.juz_parts
+                            ? `Part ${claim.juz_parts.part_number} - ${claim.juz_parts.part_label}`
+                            : '-'}
+                        </td>
                         <td className="px-4 py-3 text-gray-700">
                           {formatTime(claim.claimed_at)}
                         </td>

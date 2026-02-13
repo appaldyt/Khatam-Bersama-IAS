@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { supabase } from './lib/supabase';
-import type { Campaign, Group, Claim } from './lib/supabase';
+import type { Campaign, Group, Claim, JuzPart } from './lib/supabase';
 import Hero from './components/Hero';
 import HowItWorks from './components/HowItWorks';
 import ProgressCampaign from './components/ProgressCampaign';
@@ -14,47 +14,26 @@ function App() {
   const [campaigns, setCampaigns] = useState<Campaign[]>([]);
   const [groups, setGroups] = useState<Group[]>([]);
   const [claims, setClaims] = useState<Claim[]>([]);
+  const [parts, setParts] = useState<JuzPart[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedJuz, setSelectedJuz] = useState<number | undefined>();
   const [selectedGroupId, setSelectedGroupId] = useState<string | undefined>();
+  const [selectedPartId, setSelectedPartId] = useState<string | undefined>();
 
   const activeCampaign = campaigns.find((c) => c.is_active);
   const totalJuz = 30;
   const activeGroupId = selectedGroupId || groups[0]?.id;
   const selectedGroupName = groups.find((group) => group.id === activeGroupId)?.name;
+  const activeCampaignClaims = activeCampaign
+    ? claims.filter((claim) => claim.campaign_id === activeCampaign.id)
+    : claims;
   const claimsInActiveGroup = activeGroupId
-    ? claims.filter((claim) => claim.group_id === activeGroupId)
+    ? activeCampaignClaims.filter((claim) => claim.group_id === activeGroupId)
     : [];
   const uniqueClaimedJuz = new Set(claimsInActiveGroup.map((claim) => claim.juz_number)).size;
 
   useEffect(() => {
     fetchData();
-    subscribeToChanges();
-  }, []);
-
-  async function fetchData() {
-    setLoading(true);
-    try {
-      const [campaignsRes, groupsRes, claimsRes] = await Promise.all([
-        supabase.from('campaigns').select('*').order('created_at', { ascending: false }),
-        supabase.from('groups').select('*').order('name'),
-        supabase
-          .from('claims')
-          .select('*, participants(*)')
-          .order('claimed_at', { ascending: false }),
-      ]);
-
-      if (campaignsRes.data) setCampaigns(campaignsRes.data);
-      if (groupsRes.data) setGroups(groupsRes.data);
-      if (claimsRes.data) setClaims(claimsRes.data);
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  function subscribeToChanges() {
     const channel = supabase
       .channel('claims-changes')
       .on(
@@ -69,11 +48,40 @@ function App() {
     return () => {
       supabase.removeChannel(channel);
     };
+  }, []);
+
+  async function fetchData() {
+    setLoading(true);
+    try {
+      const [campaignsRes, groupsRes, claimsRes, partsRes] = await Promise.all([
+        supabase.from('campaigns').select('*').order('created_at', { ascending: false }),
+        supabase.from('groups').select('*').order('name'),
+        supabase
+          .from('claims')
+          .select('*, participants(*), juz_parts(*)')
+          .order('claimed_at', { ascending: false }),
+        supabase
+          .from('juz_parts')
+          .select('*')
+          .order('juz_number')
+          .order('part_number'),
+      ]);
+
+      if (campaignsRes.data) setCampaigns(campaignsRes.data);
+      if (groupsRes.data) setGroups(groupsRes.data);
+      if (claimsRes.data) setClaims(claimsRes.data);
+      if (partsRes.data) setParts(partsRes.data);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    } finally {
+      setLoading(false);
+    }
   }
 
-  const handleJuzClick = (juzNumber: number, groupId: string) => {
+  const handlePartClick = (juzNumber: number, groupId: string, partId: string) => {
     setSelectedJuz(juzNumber);
     setSelectedGroupId(groupId);
+    setSelectedPartId(partId);
     document.getElementById('join')?.scrollIntoView({ behavior: 'smooth' });
   };
 
@@ -82,21 +90,31 @@ function App() {
     name: string,
     jobTitle: string,
     groupId: string,
-    juzNumber: number
+    juzNumber: number,
+    partId: string
   ) => {
     if (!activeCampaign) {
       throw new Error('Tidak ada kampanye aktif');
     }
 
-    const existingClaimInGroup = claims.find(
+    const selectedPart = parts.find((part) => part.id === partId);
+    if (!selectedPart) {
+      throw new Error('Part tidak ditemukan');
+    }
+
+    if (selectedPart.juz_number !== juzNumber) {
+      throw new Error('Part tidak sesuai dengan juz yang dipilih');
+    }
+
+    const existingClaimInGroup = activeCampaignClaims.find(
       (c) =>
         c.campaign_id === activeCampaign.id &&
         c.group_id === groupId &&
-        c.juz_number === juzNumber
+        c.part_id === partId
     );
 
     if (existingClaimInGroup) {
-      throw new Error('Juz ini sudah diklaim di kelompok ini');
+      throw new Error('Part ini sudah diklaim di kelompok ini');
     }
 
     const participant = await supabase
@@ -126,15 +144,16 @@ function App() {
     } else {
       participantId = participant.data.id;
 
-      const existingUserClaim = claims.find(
+      const existingUserClaim = activeCampaignClaims.find(
         (c) =>
           c.campaign_id === activeCampaign.id &&
           c.group_id === groupId &&
-          c.participant_id === participantId
+          c.participant_id === participantId &&
+          c.juz_number === juzNumber
       );
 
       if (existingUserClaim) {
-        throw new Error('Anda sudah mengklaim 1 juz di kelompok ini');
+        throw new Error('Anda sudah mengklaim 1 part di juz ini untuk kelompok tersebut');
       }
     }
 
@@ -143,13 +162,14 @@ function App() {
       group_id: groupId,
       participant_id: participantId,
       juz_number: juzNumber,
+      part_id: partId,
     });
 
     if (claimError) {
       if (claimError.code === '23505') {
-        throw new Error('Juz ini sudah diklaim oleh orang lain');
+        throw new Error('Part ini sudah diklaim atau Anda sudah mengambil part pada juz ini');
       }
-      throw new Error('Gagal mengklaim juz: ' + claimError.message);
+      throw new Error('Gagal mengklaim part: ' + claimError.message);
     }
 
     await fetchData();
@@ -193,19 +213,23 @@ function App() {
       />
       <GroupProgress
         groups={groups}
-        claims={claims}
+        claims={activeCampaignClaims}
+        parts={parts}
+        activeCampaignId={activeCampaign?.id}
         selectedGroup={activeGroupId}
         onSelectedGroupChange={setSelectedGroupId}
-        onJuzClick={handleJuzClick}
+        onPartClick={handlePartClick}
       />
       <JoinForm
         groups={groups}
+        parts={parts}
         onSubmit={handleClaimSubmit}
         preselectedJuz={selectedJuz}
         preselectedGroup={selectedGroupId}
+        preselectedPartId={selectedPartId}
       />
       <ParticipantsList
-        claims={claims}
+        claims={activeCampaignClaims}
         groups={groups}
         activeCampaignId={activeCampaign?.id}
       />

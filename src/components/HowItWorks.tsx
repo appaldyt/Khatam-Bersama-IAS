@@ -14,8 +14,8 @@ export default function HowItWorks() {
     },
     {
       icon: BookMarked,
-      title: 'Klaim Juz 1-30',
-      description: 'Pilih juz yang tersedia dan klaim untuk Anda baca hingga selesai.',
+      title: 'Klaim Part Juz',
+      description: 'Pilih juz dan part yang tersedia lalu klaim bagian bacaan Anda.',
     },
   ];
 

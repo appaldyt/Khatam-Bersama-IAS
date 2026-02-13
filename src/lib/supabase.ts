@@ -28,12 +28,22 @@ export type Participant = {
   created_at: string;
 };
 
+export type JuzPart = {
+  id: string;
+  juz_number: number;
+  part_number: number;
+  part_label: string;
+  created_at: string;
+};
+
 export type Claim = {
   id: string;
   campaign_id: string;
   group_id: string;
   participant_id: string;
   juz_number: number;
+  part_id: string;
   claimed_at: string;
   participants?: Participant;
+  juz_parts?: JuzPart;
 };

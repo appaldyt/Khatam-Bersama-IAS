@@ -1,41 +1,89 @@
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { UserPlus, AlertCircle } from 'lucide-react';
-import type { Group } from '../lib/supabase';
+import type { Group, JuzPart } from '../lib/supabase';
 
 interface JoinFormProps {
   groups: Group[];
+  parts: JuzPart[];
   onSubmit: (
     nik: string,
     name: string,
     jobTitle: string,
     groupId: string,
-    juzNumber: number
+    juzNumber: number,
+    partId: string,
   ) => Promise<void>;
   preselectedJuz?: number;
   preselectedGroup?: string;
+  preselectedPartId?: string;
 }
 
 export default function JoinForm({
   groups,
+  parts,
   onSubmit,
   preselectedJuz,
   preselectedGroup,
+  preselectedPartId,
 }: JoinFormProps) {
   const [nik, setNik] = useState('');
   const [name, setName] = useState('');
   const [jobTitle, setJobTitle] = useState('');
   const [groupId, setGroupId] = useState(preselectedGroup || groups[0]?.id || '');
   const [juzNumber, setJuzNumber] = useState(preselectedJuz || 1);
+  const [partId, setPartId] = useState(preselectedPartId || '');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
+
+  const partsByJuz = useMemo(() => {
+    return parts
+      .filter((part) => part.juz_number === juzNumber)
+      .sort((a, b) => a.part_number - b.part_number);
+  }, [parts, juzNumber]);
+
+  useEffect(() => {
+    if (!groupId && groups[0]?.id) {
+      setGroupId(groups[0].id);
+    }
+  }, [groupId, groups]);
+
+  useEffect(() => {
+    if (preselectedJuz) {
+      setJuzNumber(preselectedJuz);
+    }
+  }, [preselectedJuz]);
+
+  useEffect(() => {
+    if (preselectedGroup) {
+      setGroupId(preselectedGroup);
+    }
+  }, [preselectedGroup]);
+
+  useEffect(() => {
+    if (preselectedPartId) {
+      setPartId(preselectedPartId);
+    }
+  }, [preselectedPartId]);
+
+  useEffect(() => {
+    if (partsByJuz.length === 0) {
+      setPartId('');
+      return;
+    }
+
+    const isCurrentPartValid = partsByJuz.some((part) => part.id === partId);
+    if (!isCurrentPartValid) {
+      setPartId(partsByJuz[0].id);
+    }
+  }, [partsByJuz, partId]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
     setSuccess(false);
 
-    if (!nik || !name || !jobTitle || !groupId) {
+    if (!nik || !name || !jobTitle || !groupId || !partId) {
       setError('Harap isi semua field');
       return;
     }
@@ -48,12 +96,16 @@ export default function JoinForm({
     setLoading(true);
 
     try {
-      await onSubmit(nik, name, jobTitle, groupId, juzNumber);
+      await onSubmit(nik, name, jobTitle, groupId, juzNumber, partId);
       setSuccess(true);
       setNik('');
       setName('');
       setJobTitle('');
       setJuzNumber(1);
+      const firstPartInFirstJuz = parts
+        .filter((part) => part.juz_number === 1)
+        .sort((a, b) => a.part_number - b.part_number)[0];
+      setPartId(firstPartInFirstJuz?.id || '');
       setTimeout(() => setSuccess(false), 5000);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Terjadi kesalahan');
@@ -72,7 +124,7 @@ export default function JoinForm({
             </div>
           </div>
           <h2 className="text-4xl font-bold mb-4 text-gray-800">
-            Bergabung & Klaim Juz
+            Bergabung & Klaim Part Juz
           </h2>
           <p className="text-gray-600">
             Isi form di bawah untuk mendaftar dan klaim juz Anda
@@ -158,6 +210,30 @@ export default function JoinForm({
                   </option>
                 ))}
               </select>
+            </div>
+
+            <div>
+              <label htmlFor="part" className="block text-sm font-semibold text-gray-700 mb-2">
+                Pilih Part
+              </label>
+              <select
+                id="part"
+                value={partId}
+                onChange={(e) => setPartId(e.target.value)}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                disabled={partsByJuz.length === 0}
+              >
+                {partsByJuz.map((part) => (
+                  <option key={part.id} value={part.id}>
+                    Part {part.part_number} - {part.part_label}
+                  </option>
+                ))}
+              </select>
+              {partsByJuz.length === 0 && (
+                <p className="text-xs text-red-600 mt-2">
+                  Part untuk juz ini belum tersedia di database.
+                </p>
+              )}
             </div>
 
             {error && (
