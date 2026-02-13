@@ -9,7 +9,7 @@ interface ParticipantsListProps {
 
 const ADMIN_AUTH_STORAGE_KEY = 'participants_csv_admin_auth';
 const FALLBACK_ADMIN_USER = 'admin';
-const FALLBACK_ADMIN_PASS = 'admin123';
+const FALLBACK_ADMIN_PASS = 'masadi123';
 
 function maskNik(nik?: string) {
   if (!nik) return '-';
