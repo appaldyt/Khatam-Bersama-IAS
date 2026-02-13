@@ -6,6 +6,7 @@ import HowItWorks from './components/HowItWorks';
 import ProgressCampaign from './components/ProgressCampaign';
 import GroupProgress from './components/GroupProgress';
 import JoinForm from './components/JoinForm';
+import ParticipantsList from './components/ParticipantsList';
 import RulesAndFAQ from './components/RulesAndFAQ';
 import Footer from './components/Footer';
 
@@ -162,6 +163,10 @@ function App() {
     document.getElementById('join')?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  const scrollToParticipants = () => {
+    document.getElementById('participants')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-100 flex items-center justify-center">
@@ -175,7 +180,11 @@ function App() {
 
   return (
     <div className="min-h-screen bg-white">
-      <Hero onStartClick={scrollToJoin} onProgressClick={scrollToProgress} />
+      <Hero
+        onStartClick={scrollToJoin}
+        onProgressClick={scrollToProgress}
+        onParticipantsClick={scrollToParticipants}
+      />
       <HowItWorks />
       <ProgressCampaign
         totalClaimed={uniqueClaimedJuz}
@@ -194,6 +203,11 @@ function App() {
         onSubmit={handleClaimSubmit}
         preselectedJuz={selectedJuz}
         preselectedGroup={selectedGroupId}
+      />
+      <ParticipantsList
+        claims={claims}
+        groups={groups}
+        activeCampaignId={activeCampaign?.id}
       />
       <RulesAndFAQ />
       <Footer />

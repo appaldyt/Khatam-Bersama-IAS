@@ -3,9 +3,14 @@ import { BookOpen } from 'lucide-react';
 interface HeroProps {
   onStartClick: () => void;
   onProgressClick: () => void;
+  onParticipantsClick: () => void;
 }
 
-export default function Hero({ onStartClick, onProgressClick }: HeroProps) {
+export default function Hero({
+  onStartClick,
+  onProgressClick,
+  onParticipantsClick,
+}: HeroProps) {
   return (
     <section className="relative bg-gradient-to-br from-emerald-600 via-teal-600 to-cyan-700 text-white py-20 px-4">
       <div className="max-w-6xl mx-auto text-center">
@@ -33,6 +38,12 @@ export default function Hero({ onStartClick, onProgressClick }: HeroProps) {
             className="bg-white/10 backdrop-blur-sm border-2 border-white text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-white/20 transition-all"
           >
             Lihat Progress
+          </button>
+          <button
+            onClick={onParticipantsClick}
+            className="bg-white/10 backdrop-blur-sm border-2 border-white text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-white/20 transition-all"
+          >
+            Daftar Peserta
           </button>
         </div>
       </div>
