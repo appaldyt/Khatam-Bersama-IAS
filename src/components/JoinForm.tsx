@@ -51,6 +51,7 @@ export default function JoinForm({
   const [success, setSuccess] = useState(false);
   const isIasEntity = entityName === iasEntityName;
   const entitasGroupId = groups.find((group) => group.name === 'Entitas')?.id;
+  const iasGroupOptions = groups.filter((group) => group.name !== 'Entitas');
 
   const partsByJuz = useMemo(() => {
     return parts
@@ -93,6 +94,12 @@ export default function JoinForm({
       setGroupId(entitasGroupId);
     }
   }, [isIasEntity, entitasGroupId]);
+
+  useEffect(() => {
+    if (isIasEntity && groupId && entitasGroupId && groupId === entitasGroupId) {
+      setGroupId(iasGroupOptions[0]?.id || '');
+    }
+  }, [isIasEntity, groupId, entitasGroupId, iasGroupOptions]);
 
   useEffect(() => {
     if (partsByJuz.length === 0) {
@@ -280,7 +287,7 @@ export default function JoinForm({
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
                 disabled={!isIasEntity}
               >
-                {groups.map((group) => (
+                {(isIasEntity ? iasGroupOptions : groups).map((group) => (
                   <option key={group.id} value={group.id}>
                     {group.name}
                   </option>

@@ -58,7 +58,7 @@ export default function Footer() {
 
         <div className="border-t border-gray-800 pt-8">
           <p className="text-center text-sm text-gray-500">
-            &copy; {currentYear} IAS (Indonesian Aluminium Sheet). All rights reserved.
+            &copy; {currentYear} IAS (PT Integrasi Aviasi Solusi). All rights reserved.
           </p>
         </div>
       </div>
