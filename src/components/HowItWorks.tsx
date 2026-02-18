@@ -4,18 +4,18 @@ export default function HowItWorks() {
   const steps = [
     {
       icon: UserCheck,
-      title: 'Isi NIK & Nama',
+      title: 'Isi NIK & Nama tidak perlu login',
       description: 'Masukkan NIK dan nama lengkap Anda untuk mendaftar sebagai peserta.',
     },
     {
       icon: Users,
       title: 'Pilih Kelompok',
-      description: 'Pilih kelompok Anda: Kantor Pusat atau Regional 1-4.',
+      description: 'Pilih kelompok Anda: Kantor Pusat atau Regional 1-4 serta untuk Entitas.',
     },
     {
       icon: BookMarked,
-      title: 'Klaim Surat/Ayat',
-      description: 'Pilih juz dan Surat/Ayat yang tersedia lalu klaim bagian bacaan Anda.',
+      title: 'Klaim Ayat/Surat/Juzz',
+      description: 'Pilih Ayat/Surat/Juzz yang tersedia lalu klaim bagian bacaan Anda.',
     },
   ];
 

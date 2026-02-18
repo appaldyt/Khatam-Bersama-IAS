@@ -53,7 +53,7 @@ export default function ParticipantsList({
     const header = [
       'Nama',
       'Entitas',
-      'Jabatan',
+      'Unit Kerja',
       'Nomor WhatsApp',
       'NIK',
       'Kelompok',
@@ -183,7 +183,7 @@ export default function ParticipantsList({
                 <tr>
                   <th className="px-4 py-3 text-left font-semibold">Nama</th>
                   <th className="px-4 py-3 text-left font-semibold">Entitas</th>
-                  <th className="px-4 py-3 text-left font-semibold">Jabatan</th>
+                  <th className="px-4 py-3 text-left font-semibold">Unit Kerja</th>
                   <th className="px-4 py-3 text-left font-semibold">No. WhatsApp</th>
                   <th className="px-4 py-3 text-left font-semibold">NIK</th>
                   <th className="px-4 py-3 text-left font-semibold">Kelompok</th>
