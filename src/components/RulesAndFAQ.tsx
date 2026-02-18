@@ -2,7 +2,7 @@ import { Shield, HelpCircle, MessageCircle } from 'lucide-react';
 
 export default function RulesAndFAQ() {
   const rules = [
-    'Setiap peserta hanya boleh mengklaim 1 Surat/Ayat pada setiap juz di kelompok yang sama',
+    'Setiap peserta boleh mengganti nama Hamba Allah, jika belum berkenan untuk menuliskan nama lengkap',
     'Surat/Ayat yang sudah diklaim tidak dapat diubah atau dibatalkan',
     'Pastikan Anda dapat menyelesaikan membaca Surat/Ayat yang diklaim',
     'Surat/Ayat yang sudah diklaim peserta lain tidak dapat diambil ulang',
@@ -11,20 +11,28 @@ export default function RulesAndFAQ() {
 
   const faqs = [
     {
-      question: 'Apakah saya bisa mengklaim lebih dari 1 juz?',
-      answer: 'Anda bisa mengikuti lebih dari satu juz, tetapi hanya boleh mengambil 1 Surat/Ayat pada juz yang sama dalam kelompok yang sama.',
+      question: 'Apakah saya bisa mengklaim lebih dari 1 Ayat/Surat/Juzz?',
+      answer: 'Anda bisa mengikuti lebih dari satu Ayat/Surat/Juzz.',
     },
     {
       question: 'Bagaimana jika juz yang saya inginkan sudah diklaim?',
-      answer: 'Anda tetap bisa memilih Surat/Ayat lain yang masih tersedia pada juz tersebut.',
+      answer: 'Anda tetap bisa memilih Ayat/Surat/Juzz lain yang masih tersedia.',
     },
     {
       question: 'Berapa lama waktu untuk menyelesaikan juz yang diklaim?',
-      answer: 'Diharapkan selesai sebelum kampanye berakhir. Kampanye biasanya berlangsung selama periode tertentu (misalnya selama bulan Ramadan).',
+      answer: 'Segera selama periode Ramadan.',
     },
     {
       question: 'Bagaimana cara melaporkan jika sudah selesai?',
       answer: 'Sistem akan mencatat klaim Anda. Pastikan Anda menyelesaikan membaca Surat/Ayat yang telah diklaim sebagai amanah.',
+    },
+    {
+      question: 'Apa yang dimaksud dengan progress Kelompok?',
+      answer: 'Karyawan Kantor Pusat & SBU Pusat serta SDU Pusat memilih Kantor Pusat, Karyawan Regional & SBU Cabang sesuai regionalnya memilih Regionalnya masing-masing, dan untuk Gapusa, APS, IASS, IASH, & IASP yang ingin berpartisipasi memilih Entitas.',
+    },
+    {
+      question: 'Jika seluruhnya Ayat/Surat/Juzz sudah selesai dan Saya ingin tetap ikut berpartisipasi bagaimana caranya?',
+      answer: 'Bisa memilih kelompok lainya yang masih tersedia, jika tidak tersedia juga akan dibukakan Khatam Sesion 2.',
     },
   ];
 
