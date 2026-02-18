@@ -16,11 +16,7 @@ export default function RulesAndFAQ() {
     },
     {
       question: 'Bagaimana jika juz yang saya inginkan sudah diklaim?',
-      answer: 'Anda tetap bisa memilih Surat/Ayat lain yang masih tersedia pada juz tersebut, atau pindah ke juz/kelompok lain.',
-    },
-    {
-      question: 'Apakah saya bisa bergabung di lebih dari satu kelompok?',
-      answer: 'Ya, Anda bisa mengklaim Surat/Ayat di setiap kelompok yang berbeda, selama menggunakan NIK yang sama.',
+      answer: 'Anda tetap bisa memilih Surat/Ayat lain yang masih tersedia pada juz tersebut.',
     },
     {
       question: 'Berapa lama waktu untuk menyelesaikan juz yang diklaim?',
