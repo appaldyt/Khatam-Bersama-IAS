@@ -135,8 +135,8 @@ export default function JoinForm({
       }
     }
 
-    if (whatsappNumber.length < 10) {
-      setError('Nomor WhatsApp minimal 10 digit');
+    if (whatsappNumber.length < 9) {
+      setError('Nomor WhatsApp minimal 9 digit');
       return;
     }
 
@@ -247,14 +247,14 @@ export default function JoinForm({
 
             <div>
               <label htmlFor="jobTitle" className="block text-sm font-semibold text-gray-700 mb-2">
-                Nama Jabatan
+                Unit Kerja
               </label>
               <input
                 type="text"
                 id="jobTitle"
                 value={jobTitle}
                 onChange={(e) => setJobTitle(e.target.value)}
-                placeholder="Masukkan nama jabatan"
+                placeholder="Masukkan unit kerja"
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
               />
             </div>
