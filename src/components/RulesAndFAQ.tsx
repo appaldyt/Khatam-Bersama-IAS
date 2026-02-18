@@ -15,16 +15,16 @@ export default function RulesAndFAQ() {
       answer: 'Anda bisa mengikuti lebih dari satu Ayat/Surat/Juzz.',
     },
     {
-      question: 'Bagaimana jika juz yang saya inginkan sudah diklaim?',
+      question: 'Bagaimana jika Ayat/Surat/Juzz yang saya inginkan sudah diklaim?',
       answer: 'Anda tetap bisa memilih Ayat/Surat/Juzz lain yang masih tersedia.',
     },
     {
-      question: 'Berapa lama waktu untuk menyelesaikan juz yang diklaim?',
+      question: 'Berapa lama waktu untuk menyelesaikan Ayat/Surat/Juzz yang diklaim?',
       answer: 'Segera selama periode Ramadan.',
     },
     {
       question: 'Bagaimana cara melaporkan jika sudah selesai?',
-      answer: 'Sistem akan mencatat klaim Anda. Pastikan Anda menyelesaikan membaca Surat/Ayat yang telah diklaim sebagai amanah.',
+      answer: 'Sistem akan mencatat klaim Anda. Pastikan Anda menyelesaikan membaca Ayat/Surat/Juzz yang telah diklaim sebagai amanah.',
     },
     {
       question: 'Apa yang dimaksud dengan progress Kelompok?',
