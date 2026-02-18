@@ -175,18 +175,6 @@ function App() {
       participantId = newParticipant.id;
     } else {
       participantId = participant.data.id;
-
-      const existingUserClaim = activeCampaignClaims.find(
-        (c) =>
-          c.campaign_id === activeCampaign.id &&
-          c.group_id === groupId &&
-          c.participant_id === participantId &&
-          c.juz_number === juzNumber
-      );
-
-      if (existingUserClaim) {
-        throw new Error('Anda sudah mengklaim 1 part di juz ini untuk kelompok tersebut');
-      }
     }
 
     const { error: claimError } = await supabase.from('claims').insert({
@@ -199,7 +187,7 @@ function App() {
 
     if (claimError) {
       if (claimError.code === '23505') {
-        throw new Error('Part ini sudah diklaim atau Anda sudah mengambil part pada juz ini');
+        throw new Error('Part ini sudah diklaim di kelompok ini');
       }
       throw new Error('Gagal mengklaim part: ' + claimError.message);
     }
