@@ -2,25 +2,25 @@ import { Shield, HelpCircle, MessageCircle } from 'lucide-react';
 
 export default function RulesAndFAQ() {
   const rules = [
-    'Setiap peserta hanya boleh mengklaim 1 part pada setiap juz di kelompok yang sama',
-    'Juz yang sudah diklaim tidak dapat diubah atau dibatalkan',
-    'Pastikan Anda dapat menyelesaikan membaca juz yang diklaim',
-    'Part yang sudah diklaim peserta lain tidak dapat diambil ulang',
+    'Setiap peserta hanya boleh mengklaim 1 Surat/Ayat pada setiap juz di kelompok yang sama',
+    'Surat/Ayat yang sudah diklaim tidak dapat diubah atau dibatalkan',
+    'Pastikan Anda dapat menyelesaikan membaca Surat/Ayat yang diklaim',
+    'Surat/Ayat yang sudah diklaim peserta lain tidak dapat diambil ulang',
     'Jika ada kesalahan, hubungi admin untuk bantuan',
   ];
 
   const faqs = [
     {
       question: 'Apakah saya bisa mengklaim lebih dari 1 juz?',
-      answer: 'Anda bisa mengikuti lebih dari satu juz, tetapi hanya boleh mengambil 1 part pada juz yang sama dalam kelompok yang sama.',
+      answer: 'Anda bisa mengikuti lebih dari satu juz, tetapi hanya boleh mengambil 1 Surat/Ayat pada juz yang sama dalam kelompok yang sama.',
     },
     {
       question: 'Bagaimana jika juz yang saya inginkan sudah diklaim?',
-      answer: 'Anda tetap bisa memilih part lain yang masih tersedia pada juz tersebut, atau pindah ke juz/kelompok lain.',
+      answer: 'Anda tetap bisa memilih Surat/Ayat lain yang masih tersedia pada juz tersebut, atau pindah ke juz/kelompok lain.',
     },
     {
       question: 'Apakah saya bisa bergabung di lebih dari satu kelompok?',
-      answer: 'Ya, Anda bisa mengklaim 1 juz di setiap kelompok yang berbeda, selama menggunakan NIK yang sama.',
+      answer: 'Ya, Anda bisa mengklaim Surat/Ayat di setiap kelompok yang berbeda, selama menggunakan NIK yang sama.',
     },
     {
       question: 'Berapa lama waktu untuk menyelesaikan juz yang diklaim?',
@@ -28,7 +28,7 @@ export default function RulesAndFAQ() {
     },
     {
       question: 'Bagaimana cara melaporkan jika sudah selesai?',
-      answer: 'Sistem akan mencatat klaim Anda. Pastikan Anda menyelesaikan membaca juz yang telah diklaim sebagai amanah.',
+      answer: 'Sistem akan mencatat klaim Anda. Pastikan Anda menyelesaikan membaca Surat/Ayat yang telah diklaim sebagai amanah.',
     },
   ];
 
@@ -76,13 +76,13 @@ export default function RulesAndFAQ() {
                 <div className="bg-blue-50 rounded-lg p-4">
                   <p className="text-sm text-gray-600 mb-1">Email</p>
                   <p className="font-semibold text-blue-600">
-                    admin@ias.co.id
+                    culture@ias.id
                   </p>
                 </div>
                 <div className="bg-blue-50 rounded-lg p-4">
                   <p className="text-sm text-gray-600 mb-1">WhatsApp</p>
                   <p className="font-semibold text-blue-600">
-                    +62 812-3456-7890
+                    Novrizal Boer (085-375-135-394)
                   </p>
                 </div>
                 <div className="bg-blue-50 rounded-lg p-4">

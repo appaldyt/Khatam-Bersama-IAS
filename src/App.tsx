@@ -45,7 +45,6 @@ function App() {
   const [selectedPartId, setSelectedPartId] = useState<string | undefined>();
 
   const activeCampaign = campaigns.find((c) => c.is_active);
-  const totalJuz = 30;
   const activeGroupId = selectedGroupId || groups[0]?.id;
   const selectedGroupName = groups.find((group) => group.id === activeGroupId)?.name;
   const activeCampaignClaims = activeCampaign
@@ -54,7 +53,8 @@ function App() {
   const claimsInActiveGroup = activeGroupId
     ? activeCampaignClaims.filter((claim) => claim.group_id === activeGroupId)
     : [];
-  const uniqueClaimedJuz = new Set(claimsInActiveGroup.map((claim) => claim.juz_number)).size;
+  const claimedSuratAyatCount = claimsInActiveGroup.length;
+  const totalSuratAyat = parts.length;
 
   useEffect(() => {
     fetchData();
@@ -239,8 +239,8 @@ function App() {
       />
       <HowItWorks />
       <ProgressCampaign
-        totalClaimed={uniqueClaimedJuz}
-        totalJuz={totalJuz}
+        totalClaimed={claimedSuratAyatCount}
+        totalTarget={totalSuratAyat}
         groupName={selectedGroupName}
       />
       <GroupProgress

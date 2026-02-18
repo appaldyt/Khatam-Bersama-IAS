@@ -2,16 +2,16 @@ import { TrendingUp } from 'lucide-react';
 
 interface ProgressCampaignProps {
   totalClaimed: number;
-  totalJuz: number;
+  totalTarget: number;
   groupName?: string;
 }
 
 export default function ProgressCampaign({
   totalClaimed,
-  totalJuz,
+  totalTarget,
   groupName,
 }: ProgressCampaignProps) {
-  const percentage = Math.round((totalClaimed / totalJuz) * 100);
+  const percentage = totalTarget > 0 ? Math.round((totalClaimed / totalTarget) * 100) : 0;
 
   return (
     <section className="py-16 px-4 bg-white" id="progress">
@@ -22,8 +22,8 @@ export default function ProgressCampaign({
           </h2>
           <p className="text-gray-600">
             {groupName
-              ? `Lihat progress klaim juz untuk kelompok ${groupName}`
-              : 'Lihat seberapa banyak juz yang telah diklaim dalam kampanye ini'}
+              ? `Lihat progress klaim Surat/Ayat untuk kelompok ${groupName}`
+              : 'Lihat seberapa banyak Surat/Ayat yang telah diklaim dalam kampanye ini'}
           </p>
         </div>
 
@@ -35,10 +35,10 @@ export default function ProgressCampaign({
               </div>
               <div>
                 <p className="text-sm text-gray-600">
-                  Total Juz Diklaim{groupName ? ` (${groupName})` : ''}
+                  Total Surat/Ayat Diklaim{groupName ? ` (${groupName})` : ''}
                 </p>
                 <p className="text-3xl font-bold text-gray-800">
-                  {totalClaimed} / {totalJuz}
+                  {totalClaimed} / {totalTarget}
                 </p>
               </div>
             </div>
@@ -56,7 +56,7 @@ export default function ProgressCampaign({
           </div>
 
           <p className="text-center mt-4 text-gray-700 font-medium">
-            {totalJuz - totalClaimed} juz lagi untuk menyelesaikan khatam bersama!
+            {Math.max(totalTarget - totalClaimed, 0)} Surat/Ayat lagi untuk menyelesaikan khatam bersama!
           </p>
         </div>
       </div>

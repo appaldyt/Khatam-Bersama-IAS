@@ -65,7 +65,7 @@ export default function ParticipantsList({
     const rows = displayedClaims.map((claim) => {
       const groupName = groups.find((group) => group.id === claim.group_id)?.name || '-';
       const partText = claim.juz_parts
-        ? `Part ${claim.juz_parts.part_number} - ${claim.juz_parts.part_label}`
+        ? `Surat/Ayat Ke ${claim.juz_parts.part_number} - ${claim.juz_parts.part_label}`
         : '-';
 
       return [
@@ -173,7 +173,7 @@ export default function ParticipantsList({
           </div>
         </div>
         <p className="text-center text-gray-600 mb-8">
-          Peserta yang sudah mengikuti dan mengklaim part bacaan
+          Peserta yang sudah mengikuti dan mengklaim Surat/Ayat bacaan
         </p>
 
         <div className="bg-gray-50 rounded-xl border border-gray-200 overflow-hidden">
@@ -188,7 +188,7 @@ export default function ParticipantsList({
                   <th className="px-4 py-3 text-left font-semibold">NIK</th>
                   <th className="px-4 py-3 text-left font-semibold">Kelompok</th>
                   <th className="px-4 py-3 text-left font-semibold">Juz</th>
-                  <th className="px-4 py-3 text-left font-semibold">Part</th>
+                  <th className="px-4 py-3 text-left font-semibold">Surat/Ayat</th>
                   <th className="px-4 py-3 text-left font-semibold">Waktu Klaim</th>
                 </tr>
               </thead>
@@ -196,7 +196,7 @@ export default function ParticipantsList({
                 {displayedClaims.length === 0 ? (
                   <tr>
                     <td colSpan={9} className="px-4 py-10 text-center text-gray-500">
-                      Belum ada peserta yang klaim part.
+                      Belum ada peserta yang klaim Surat/Ayat.
                     </td>
                   </tr>
                 ) : (
@@ -224,7 +224,7 @@ export default function ParticipantsList({
                         <td className="px-4 py-3 text-gray-700">Juz {claim.juz_number}</td>
                         <td className="px-4 py-3 text-gray-700">
                           {claim.juz_parts
-                            ? `Part ${claim.juz_parts.part_number} - ${claim.juz_parts.part_label}`
+                            ? `Surat/Ayat Ke ${claim.juz_parts.part_number} - ${claim.juz_parts.part_label}`
                             : '-'}
                         </td>
                         <td className="px-4 py-3 text-gray-700">

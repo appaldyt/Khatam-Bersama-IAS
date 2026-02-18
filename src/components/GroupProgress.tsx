@@ -61,15 +61,16 @@ export default function GroupProgress({
 
   const selectedGroupData = groups.find((group) => group.id === activeGroupId);
 
-  const claimedJuzCount = useMemo(() => {
-    const claimedJuz = new Set<number>();
+  const claimedSuratAyatCount = useMemo(() => {
+    const claimedPartIds = new Set<string>();
     for (const claim of activeClaims) {
-      if (claim.group_id === activeGroupId) {
-        claimedJuz.add(claim.juz_number);
+      if (claim.group_id === activeGroupId && claim.part_id) {
+        claimedPartIds.add(claim.part_id);
       }
     }
-    return claimedJuz.size;
+    return claimedPartIds.size;
   }, [activeClaims, activeGroupId]);
+  const totalSuratAyatCount = parts.length;
 
   const formatTime = (timestamp: string) => {
     const date = new Date(timestamp);
@@ -88,7 +89,7 @@ export default function GroupProgress({
           Progress Kelompok
         </h2>
         <p className="text-center text-gray-600 mb-8">
-          Pilih kelompok untuk melihat detail progress setiap juz dan part
+          Pilih kelompok untuk melihat detail progress setiap juz dan Surat/Ayat
         </p>
 
         <div className="mb-8 flex flex-wrap gap-2 justify-center">
@@ -115,9 +116,9 @@ export default function GroupProgress({
               </h3>
               <div className="text-right">
                 <p className="text-3xl font-bold text-teal-600">
-                  {claimedJuzCount}/30
+                  {claimedSuratAyatCount}/{totalSuratAyatCount}
                 </p>
-                <p className="text-sm text-gray-600">Juz Sudah Terisi</p>
+                <p className="text-sm text-gray-600">Surat/Ayat Sudah Terisi</p>
               </div>
             </div>
           </div>
@@ -141,13 +142,13 @@ export default function GroupProgress({
                   new Date(b.claimed_at).getTime() - new Date(a.claimed_at).getTime()
               )[0];
 
-            let statusText = 'Belum ada part';
+            let statusText = 'Belum ada Surat/Ayat';
             if (totalParts > 0 && claimedPartCount === 0) {
               statusText = 'Tersedia';
             } else if (totalParts > 0 && claimedPartCount === totalParts) {
               statusText = 'Penuh';
             } else if (totalParts > 0) {
-              statusText = `${claimedPartCount}/${totalParts} Part`;
+              statusText = `${claimedPartCount}/${totalParts} Surat/Ayat`;
             }
 
             return (
@@ -186,7 +187,7 @@ export default function GroupProgress({
                         ? 'bg-emerald-200 text-emerald-800'
                         : statusText === 'Tersedia'
                         ? 'bg-gray-100 text-gray-600'
-                        : statusText === 'Belum ada part'
+                        : statusText === 'Belum ada Surat/Ayat'
                         ? 'bg-red-100 text-red-700'
                         : 'bg-teal-100 text-teal-700'
                     }`}
@@ -207,7 +208,7 @@ export default function GroupProgress({
                   <div className="mt-4 border-t border-gray-200 pt-3 space-y-2">
                     {partOptions.length === 0 ? (
                       <p className="text-xs text-red-600">
-                        Data part untuk juz ini belum tersedia.
+                        Data Surat/Ayat untuk juz ini belum tersedia.
                       </p>
                     ) : (
                       partOptions.map((part) => {
@@ -219,8 +220,8 @@ export default function GroupProgress({
                           >
                             <div className="min-w-0">
                               <p className="text-xs font-medium text-gray-700 truncate">
-                                <span title={`Part ${part.part_number} - ${part.part_label}`}>
-                                  Part {part.part_number} - {part.part_label}
+                                <span title={`Surat/Ayat Ke ${part.part_number} - ${part.part_label}`}>
+                                  Surat/Ayat Ke {part.part_number} - {part.part_label}
                                 </span>
                               </p>
                               {partClaim ? (

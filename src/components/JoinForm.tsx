@@ -182,10 +182,10 @@ export default function JoinForm({
             </div>
           </div>
           <h2 className="text-4xl font-bold mb-4 text-gray-800">
-            Bergabung & Klaim Part Juz
+            Bergabung & Klaim Surat/Ayat
           </h2>
           <p className="text-gray-600">
-            Isi form di bawah untuk mendaftar dan klaim juz Anda
+            Isi form di bawah untuk mendaftar dan klaim Surat/Ayat Anda
           </p>
         </div>
 
@@ -233,7 +233,7 @@ export default function JoinForm({
 
             <div>
               <label htmlFor="name" className="block text-sm font-semibold text-gray-700 mb-2">
-                Nama Lengkap
+                Nama Lengkap / Hamba Allah
               </label>
               <input
                 type="text"
@@ -320,7 +320,7 @@ export default function JoinForm({
 
             <div>
               <label htmlFor="part" className="block text-sm font-semibold text-gray-700 mb-2">
-                Pilih Part
+                Pilih Surat/Ayat
               </label>
               <select
                 id="part"
@@ -331,13 +331,13 @@ export default function JoinForm({
               >
                 {partsByJuz.map((part) => (
                   <option key={part.id} value={part.id}>
-                    Part {part.part_number} - {part.part_label}
+                    Surat/Ayat Ke {part.part_number} - {part.part_label}
                   </option>
                 ))}
               </select>
               {partsByJuz.length === 0 && (
                 <p className="text-xs text-red-600 mt-2">
-                  Part untuk juz ini belum tersedia di database.
+                  Surat/Ayat untuk juz ini belum tersedia di database.
                 </p>
               )}
             </div>
@@ -362,7 +362,7 @@ export default function JoinForm({
               disabled={loading}
               className="w-full bg-gradient-to-r from-emerald-600 to-teal-600 text-white py-4 rounded-lg font-semibold text-lg hover:from-emerald-700 hover:to-teal-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
             >
-              {loading ? 'Memproses...' : 'Lanjut Klaim Juz'}
+              {loading ? 'Memproses...' : 'Lanjut Klaim Surat/Ayat'}
             </button>
           </div>
         </form>
