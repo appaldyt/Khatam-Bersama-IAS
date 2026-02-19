@@ -28,7 +28,7 @@ export default function RulesAndFAQ() {
     },
     {
       question: 'Apa yang dimaksud dengan progress Kelompok?',
-      answer: 'Karyawan Kantor Pusat & SBU Pusat serta SDU Pusat memilih Kantor Pusat, Karyawan Regional & SBU Cabang sesuai regionalnya memilih Regionalnya masing-masing, dan untuk Gapusa, APS, IASS, IASH, & IASP yang ingin berpartisipasi memilih Entitas.',
+      answer: 'Karyawan Kantor Pusat & SBU Pusat serta SDU Pusat memilih Kantor Pusat, Karyawan Regional & SBU Cabang sesuai regionalnya memilih Regionalnya masing-masing, dan untuk Gapura, APS, IASS, IASH, IASP, & Injourney Group yang ingin berpartisipasi memilih Entitas.',
     },
     {
       question: 'Jika seluruhnya Ayat/Surat/Juzz sudah selesai dan Saya ingin tetap ikut berpartisipasi bagaimana caranya?',

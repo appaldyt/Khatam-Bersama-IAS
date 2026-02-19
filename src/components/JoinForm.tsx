@@ -30,6 +30,7 @@ export default function JoinForm({
 }: JoinFormProps) {
   const entityOptions = [
     'PT Integrasi Aviasi Solusi',
+    'Injourney Group',
     'PT Gapura Angkasa',
     'PT IAS Hospitality',
     'PT IAS Support',
