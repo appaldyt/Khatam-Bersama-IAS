@@ -140,7 +140,7 @@ function App() {
     );
 
     if (existingClaimInGroup) {
-      throw new Error('Part ini sudah diklaim di kelompok ini');
+      throw new Error('Part ini sudah diklaim di lokasi kerja ini');
     }
 
     const participant = await supabase
@@ -187,7 +187,7 @@ function App() {
 
     if (claimError) {
       if (claimError.code === '23505') {
-        throw new Error('Part ini sudah diklaim di kelompok ini');
+        throw new Error('Part ini sudah diklaim di lokasi kerja ini');
       }
       throw new Error('Gagal mengklaim part: ' + claimError.message);
     }

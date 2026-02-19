@@ -9,8 +9,8 @@ export default function HowItWorks() {
     },
     {
       icon: Users,
-      title: 'Pilih Kelompok',
-      description: 'Pilih kelompok Anda: Kantor Pusat atau Regional 1-4 serta untuk Entitas.',
+      title: 'Pilih Lokasi Kerja',
+      description: 'Pilih lokasi kerja Anda: Kantor Pusat atau Regional 1-4 serta untuk Entitas.',
     },
     {
       icon: BookMarked,

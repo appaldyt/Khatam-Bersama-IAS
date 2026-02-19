@@ -27,12 +27,12 @@ export default function RulesAndFAQ() {
       answer: 'Sistem akan mencatat klaim Anda. Pastikan Anda menyelesaikan membaca Ayat/Surat/Juzz yang telah diklaim sebagai amanah.',
     },
     {
-      question: 'Apa yang dimaksud dengan progress Kelompok?',
+      question: 'Apa yang dimaksud dengan progress Lokasi Kerja?',
       answer: 'Karyawan Kantor Pusat & SBU Pusat serta SDU Pusat memilih Kantor Pusat, Karyawan Regional & SBU Cabang sesuai regionalnya memilih Regionalnya masing-masing, dan untuk Gapura, APS, IASS, IASH, IASP, & Injourney Group yang ingin berpartisipasi memilih Entitas.',
     },
     {
       question: 'Jika seluruhnya Ayat/Surat/Juzz sudah selesai dan Saya ingin tetap ikut berpartisipasi bagaimana caranya?',
-      answer: 'Bisa memilih kelompok lainya yang masih tersedia, jika tidak tersedia juga akan dibukakan Khatam Sesion 2.',
+      answer: 'Bisa memilih lokasi kerja lainnya yang masih tersedia, jika tidak tersedia juga akan dibukakan Khatam Sesion 2.',
     },
   ];
 

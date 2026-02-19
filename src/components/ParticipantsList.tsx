@@ -56,7 +56,7 @@ export default function ParticipantsList({
       'Unit Kerja',
       'Nomor WhatsApp',
       'NIK',
-      'Kelompok',
+      'Lokasi Kerja',
       'Juz',
       'Part',
       'Waktu Klaim',
@@ -186,7 +186,7 @@ export default function ParticipantsList({
                   <th className="px-4 py-3 text-left font-semibold">Unit Kerja</th>
                   <th className="px-4 py-3 text-left font-semibold">No. WhatsApp</th>
                   <th className="px-4 py-3 text-left font-semibold">NIK</th>
-                  <th className="px-4 py-3 text-left font-semibold">Kelompok</th>
+                  <th className="px-4 py-3 text-left font-semibold">Lokasi Kerja</th>
                   <th className="px-4 py-3 text-left font-semibold">Juz</th>
                   <th className="px-4 py-3 text-left font-semibold">Surat/Ayat</th>
                   <th className="px-4 py-3 text-left font-semibold">Waktu Klaim</th>

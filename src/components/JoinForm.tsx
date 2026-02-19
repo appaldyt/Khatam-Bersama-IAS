@@ -279,7 +279,7 @@ export default function JoinForm({
 
             <div>
               <label htmlFor="group" className="block text-sm font-semibold text-gray-700 mb-2">
-                Kelompok
+                Lokasi Kerja
               </label>
               <select
                 id="group"
@@ -296,7 +296,7 @@ export default function JoinForm({
               </select>
               {!isIasEntity && (
                 <p className="text-xs text-gray-500 mt-2">
-                  Untuk entitas selain PT Integrasi Aviasi Solusi, kelompok otomatis ke Entitas.
+                  Untuk entitas selain PT Integrasi Aviasi Solusi, lokasi kerja otomatis ke Entitas.
                 </p>
               )}
             </div>

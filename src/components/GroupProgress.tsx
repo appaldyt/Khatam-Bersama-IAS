@@ -86,10 +86,10 @@ export default function GroupProgress({
     <section className="py-16 px-4 bg-gray-50">
       <div className="max-w-6xl mx-auto">
         <h2 className="text-4xl font-bold text-center mb-4 text-gray-800">
-          Progress Kelompok
+          Progress Lokasi Kerja
         </h2>
         <p className="text-center text-gray-600 mb-8">
-          Pilih kelompok untuk melihat detail progress setiap juz dan Surat/Ayat
+          Pilih lokasi kerja untuk melihat detail progress setiap juz dan Surat/Ayat
         </p>
 
         <div className="mb-8 flex flex-wrap gap-2 justify-center">

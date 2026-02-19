@@ -22,7 +22,7 @@ export default function ProgressCampaign({
           </h2>
           <p className="text-gray-600">
             {groupName
-              ? `Lihat progress klaim Surat/Ayat untuk kelompok ${groupName}`
+              ? `Lihat progress klaim Surat/Ayat untuk lokasi kerja ${groupName}`
               : 'Lihat seberapa banyak Surat/Ayat yang telah diklaim dalam kampanye ini'}
           </p>
         </div>
